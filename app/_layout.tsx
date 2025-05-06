@@ -4,7 +4,7 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { useColorScheme } from '../hooks/useColorScheme';
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -20,7 +20,15 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        {/* Start with loading screen */}
+        <Stack.Screen name="halaman-awal/loadingscreen" options={{ headerShown: false }} />
+        {/* Welcome screen */}
+        <Stack.Screen name="halaman-awal/welcome" options={{ headerShown: false }} />
+        {/* Registration screen */}
+        <Stack.Screen name="halaman-awal/daftar" options={{ headerShown: false }} />
+        {/* Login screen */}
+        <Stack.Screen name="halaman-awal/login" options={{ headerShown: false }} />
+        {/* Other screens */}
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />
