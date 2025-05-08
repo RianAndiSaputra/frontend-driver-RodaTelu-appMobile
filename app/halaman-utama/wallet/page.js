@@ -1,10 +1,12 @@
 import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Footer from '../../../components/Footer';
 
 const WalletScreen = () => {
   const [activeTab, setActiveTab] = useState('dompet');
+  const router = useRouter();
 
   return (
     <View style={styles.container}>
@@ -27,21 +29,14 @@ const WalletScreen = () => {
           
           {/* Horizontal Action Buttons */}
           <View style={styles.horizontalActions}>
-            <TouchableOpacity style={styles.horizontalAction}>
+            <TouchableOpacity style={styles.horizontalAction} onPress={() => router.push('/halaman-utama/topup/page')}>
               <View style={styles.horizontalActionIcon}>
                 <Ionicons name="add-circle" size={24} color="#B1944D" />
               </View>
               <Text style={styles.horizontalActionText}>Top Up</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.horizontalAction}>
-              <View style={styles.horizontalActionIcon}>
-                <Ionicons name="swap-horizontal" size={24} color="#B1944D" />
-              </View>
-              <Text style={styles.horizontalActionText}>Transfer</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={styles.horizontalAction}>
+            <TouchableOpacity style={styles.horizontalAction} onPress={() => router.push('/halaman-utama/tarik-tunai/page')}>
               <View style={styles.horizontalActionIcon}>
                 <Ionicons name="remove-circle" size={24} color="#B1944D" />
               </View>
@@ -83,6 +78,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     flex: 1,
+  marginBottom: 60, // Added to prevent footer overlap
   },
   header: {
     backgroundColor: '#0F3222',
@@ -100,26 +96,26 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
     paddingVertical: 35,
     backgroundColor: '#0F3222',
-    borderBottomLeftRadius: 25,  // lengkung kiri bawah
+    borderBottomLeftRadius: 25,
     borderBottomRightRadius: 25, 
   },
   greetingText: {
     color: '#FFFFFF',
     fontSize: 22,
     fontWeight: '600',
-    marginBottom: '5',
+    marginBottom: 5,
   },
   welcomeText: {
     color: 'rgba(255,255,255,0.7)',
     fontSize: 14,
-    marginBottom: '15',
+    marginBottom: 15,
   },
   balanceContainer: {
     backgroundColor: '#FFFFFF',
     marginHorizontal: 20,
     marginTop: -45,
     borderRadius: 12,
-    padding: 1,
+    padding: 15,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.1,
@@ -130,8 +126,7 @@ const styles = StyleSheet.create({
     color: '#666666',
     fontSize: 14,
     fontWeight: '500',
-    marginTop: '7',
-    marginHorizontal: 10,
+    marginTop: 7,
   },
   balanceAmount: {
     color: '#0F3222',
@@ -139,12 +134,11 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     marginTop: 5,
     marginBottom: 10,
-    marginHorizontal: 10,
   },
   horizontalActions: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: -5,
+    marginTop: 15,
   },
   horizontalAction: {
     alignItems: 'center',
@@ -153,8 +147,8 @@ const styles = StyleSheet.create({
   },
   horizontalActionIcon: {
     backgroundColor: 'rgba(177, 148, 77, 0.1)',
-    width: 35,
-    height: 35,
+    width: 45,
+    height: 45,
     borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
@@ -165,7 +159,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 12,
     textAlign: 'center',
-    marginBottom: 15,
   },
   divider: {
     height: 1,

@@ -145,9 +145,22 @@ const DriverHomeScreen = () => {
 
   const renderVehicleInfo = () => (
     <View style={styles.vehicleCard}>
-      <FontAwesome5 name="rickshaw" size={24} color="#0F3222" />
-      <Text style={styles.vehicleNumber}>{driverData.vehicleNumber}</Text>
-      <TouchableOpacity style={styles.editButton}>
+      <View style={styles.vehicleIconContainer}>
+        <FontAwesome5 
+          name="rickshaw" 
+          size={24} 
+          color="#0F3222" 
+          style={styles.vehicleIcon}
+        />
+      </View>
+      <Text style={styles.vehicleNumber} numberOfLines={1} ellipsizeMode="tail">
+        {driverData?.vehicleNumber || 'BELUM TERDAFTAR'}
+      </Text>
+      <TouchableOpacity 
+        style={styles.editButton}
+        activeOpacity={0.7}
+        onPress={() => navigation.navigate('EditVehicle')}
+      >
         <Text style={styles.editButtonText}>Edit</Text>
       </TouchableOpacity>
     </View>
@@ -158,10 +171,10 @@ const DriverHomeScreen = () => {
       <Text style={styles.balanceTitle}>Saldo Anda</Text>
       <Text style={styles.balanceAmount}>Rp {driverData.balance.toLocaleString('id-ID')}</Text>
       <View style={styles.balanceActions}>
-        <TouchableOpacity style={styles.balanceButton}>
+        <TouchableOpacity style={styles.balanceButton} onPress={() => router.push('/halaman-utama/tarik-tunai/page')}>
           <Text style={styles.balanceButtonText}>Tarik Dana</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.balanceButton}>
+        <TouchableOpacity style={styles.balanceButton} onPress={() => router.push('/halaman-utama/riwayat-transaksi/page')}>
           <Text style={styles.balanceButtonText}>Riwayat</Text>
         </TouchableOpacity>
       </View>
@@ -261,12 +274,12 @@ const DriverHomeScreen = () => {
       </TouchableOpacity>
       
       <View style={styles.menuGrid}>
-        {[
-          { icon: 'trophy', label: 'Pencapaian' },
-          { icon: 'chart-line', label: 'Statistik' },
-          { icon: 'lightbulb-on', label: 'Tips' }
+        {[  
+          { icon: 'trophy', label: 'Pencapaian', path: '/halaman-utama/pencapaian/page' },
+          { icon: 'chart-line', label: 'Statistik', path: '/halaman-utama/statistic/page' },
+          { icon: 'lightbulb-on', label: 'Tips', path: '/halaman-utama/tips/page' }
         ].map((item, index) => (
-          <TouchableOpacity key={index} style={styles.menuItem}>
+          <TouchableOpacity key={index} style={styles.menuItem} onPress={() => router.push(item.path)}>
             <View style={styles.menuIcon}>
               <MaterialCommunityIcons name={item.icon} size={24} color="#0F3222" />
             </View>
@@ -353,6 +366,7 @@ const styles = StyleSheet.create({
   headerContainer: {
     backgroundColor: '#0F3222',
     paddingTop: StatusBar.currentHeight,
+    paddingBottom: 60,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
   },
@@ -365,7 +379,8 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   header: {
-    padding: 40,
+    padding: 10,
+    paddingTop: 50, 
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -419,19 +434,32 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     backgroundColor: '#FF3B30',
   },
+  vehicleIconContainer: {
+    backgroundColor: 'rgba(15, 50, 34, 0.05)',
+    padding: 8,
+    borderRadius: 8,
+  },
+  vehicleIcon: {
+    width: 24,
+    height: 24,
+    textAlign: 'center',
+  },
   vehicleCard: {
     backgroundColor: '#FFFFFF',
     marginHorizontal: 16,
-    marginTop: 16,
+    marginTop: -20,
     borderRadius: 12,
     padding: 16,
     flexDirection: 'row',
     alignItems: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
+    elevation: 8,
+    zIndex: 2,
+    borderWidth: 1,
+    borderColor: 'rgba(15, 50, 34, 0.1)',
   },
   vehicleNumber: {
     fontSize: 18,
