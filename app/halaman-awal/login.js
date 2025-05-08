@@ -36,7 +36,7 @@ const LoginScreen = ({ navigation }) => {
     console.log('Login with:', phoneNumber);
     
     // Navigate to home screen
-    router.push('halaman-utama/home');
+    router.push('halaman-utama/home/page');
   };
 
   return (

@@ -7,7 +7,7 @@ import { Dimensions, Image, Platform, StyleSheet, Text, TouchableOpacity, View }
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
-import { GOOGLE_MAPS_API_KEY } from '../../config';
+import { GOOGLE_MAPS_API_KEY } from '../../../config';
 
 const { width, height } = Dimensions.get('window');
 
@@ -23,7 +23,7 @@ const DriverNavigationScreen = () => {
 
   // Map photo string identifier to actual image source
   const photoMapping = {
-    'logo.png': require('../../assets/images/logo.png'),
+    'logo.png': require('../../../assets/images/logo.png'),
   };
 
   // Replace photo string with actual image source if applicable
@@ -336,7 +336,7 @@ const DriverNavigationScreen = () => {
           <View style={styles.bottomSheetContent}>
             <View style={styles.passengerInfo}>
               <Image 
-                source={order.passenger && order.passenger.photo ? order.passenger.photo : require('../../assets/images/logo.png')} 
+                source={order.passenger && order.passenger.photo ? order.passenger.photo : require('../../../assets/images/logo.png')} 
                 style={styles.passengerPhoto} 
               />
               <View style={styles.passengerDetails}>

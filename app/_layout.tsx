@@ -29,9 +29,10 @@ export default function RootLayout() {
         {/* Login screen */}
         <Stack.Screen name="halaman-awal/login" options={{ headerShown: false }} />
         {/* Other screens */}
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+      <Stack.Screen name="+not-found" />
+      <Stack.Screen name="halaman-utama" options={{ headerShown: false }} />
+    </Stack>
+    <StatusBar style="auto" />
+  </ThemeProvider>
   );
 }

@@ -13,7 +13,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-import Footer from '../../components/Footer';
+import Footer from '../../../components/Footer';
 
 const ProfileScreen = () => {
   const router = useRouter();

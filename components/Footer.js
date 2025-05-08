@@ -8,7 +8,7 @@ const Footer = ({ activeTab, setActiveTab }) => {
 
   const menuItems = [
     { key: 'beranda', label: 'Beranda', icon: 'home' },
-    { key: 'riwayat', label: 'Riwayat', icon: 'history' },
+    { key: 'history', label: 'history', icon: 'history' },
     { key: 'dompet', label: 'Dompet', icon: 'wallet' },
     { key: 'Akun', label: 'Akun', icon: 'account' },
   ];
@@ -18,16 +18,16 @@ const Footer = ({ activeTab, setActiveTab }) => {
     // Navigate to corresponding page
     switch (key) {
       case 'beranda':
-        router.push('/halaman-utama/home');
+        router.push('/halaman-utama/home/page');
         break;
-      case 'riwayat':
-        router.push('/halaman-utama/history');
+      case 'history':
+        router.push('/halaman-utama/history/page');
         break;
       case 'dompet':
-        router.push('/halaman-utama/wallet');
+        router.push('/halaman-utama/wallet/page');
         break;
       case 'Akun':
-        router.push('/halaman-utama/profile');
+        router.push('/halaman-utama/profile/page');
         break;
       default:
         break;
