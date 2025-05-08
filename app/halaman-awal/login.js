@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     marginBottom: 10,
-    tintColor: '#0F3222', // Changed from gold to dark green
+    tintColor: '#B1944D', // Changed from gold to dark green
   },
   title: {
     fontSize: 24,
@@ -288,16 +288,18 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   registerLink: {
-    color: '#0F3222', // Changed from gold to dark green
+    color: '#B1944D', // Changed from gold to dark green
     fontSize: 14,
     fontWeight: '600',
     marginLeft: 5,
     textDecorationLine: 'underline',
   },
   footerContainer: {
-    marginTop: 40,
+    flex: 1,
+    justifyContent: 'flex-end',
     paddingHorizontal: 30,
-  },
+    paddingBottom: 20, // beri jarak dari bawah
+  },  
   footerText: {
     fontSize: 12,
     color: '#8A8A8A',
