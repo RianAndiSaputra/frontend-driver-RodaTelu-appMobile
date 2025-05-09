@@ -29,6 +29,7 @@ const ProfileScreen = () => {
     nik: '1234567890123456'
   });
   const [isEditing, setIsEditing] = useState(false);
+  const [activeTab, setActiveTab] = useState('profile'); // Added this line
 
   const toggleSwitch = () => setIsEnabled(previousState => !previousState);
 
@@ -76,22 +77,33 @@ const ProfileScreen = () => {
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        {/* Header */}
-        <View style={styles.header}>
-          <View style={{ width: 24 }} />
-          <Text style={styles.headerTitle}>Profil & Pengaturan</Text>
-          <View style={{ width: 24 }} />
+      {/* Modern Header with Gradient */}
+      <View style={styles.header}>
+        <View style={styles.headerContent}>
+          <Text style={styles.headerTitle}>Profil Saya</Text>
+          {isEditing ? (
+            <TouchableOpacity onPress={handleSave} style={styles.saveButton}>
+              <Text style={styles.saveButtonText}>Simpan</Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity onPress={() => setIsEditing(true)} style={styles.editButton}>
+              <MaterialIcons name="edit" size={20} color="#FFFFFF" />
+            </TouchableOpacity>
+          )}
         </View>
+      </View>
 
+      <ScrollView style={styles.scrollContainer} showsVerticalScrollIndicator={false}>
         {/* Profile Section */}
         <View style={styles.profileSection}>
-          <TouchableOpacity onPress={pickImage}>
+          <TouchableOpacity onPress={pickImage} activeOpacity={0.8}>
             <View style={styles.avatarContainer}>
               {profileImage ? (
                 <Image source={{ uri: profileImage }} style={styles.avatar} />
               ) : (
-                <FontAwesome5 name="user-circle" size={80} color="#0F3222" />
+                <View style={styles.avatarPlaceholder}>
+                  <FontAwesome5 name="user-circle" size={80} color="#FFFFFF" />
+                </View>
               )}
               <View style={styles.editPhotoIcon}>
                 <MaterialIcons name="edit" size={16} color="#FFFFFF" />
@@ -111,8 +123,6 @@ const ProfileScreen = () => {
 
         {/* Account Settings */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Akun Saya</Text>
-          
           <View style={styles.card}>
             <View style={styles.inputGroup}>
               <Text style={styles.inputLabel}>Nama Lengkap</Text>
@@ -123,7 +133,9 @@ const ProfileScreen = () => {
                   onChangeText={(text) => handleInputChange('nama', text)}
                 />
               ) : (
-                <Text style={styles.inputText}>{formData.nama}</Text>
+                <View style={styles.inputTextContainer}>
+                  <Text style={styles.inputText}>{formData.nama}</Text>
+                </View>
               )}
             </View>
             
@@ -139,7 +151,9 @@ const ProfileScreen = () => {
                   keyboardType="email-address"
                 />
               ) : (
-                <Text style={styles.inputText}>{formData.email}</Text>
+                <View style={styles.inputTextContainer}>
+                  <Text style={styles.inputText}>{formData.email}</Text>
+                </View>
               )}
             </View>
             
@@ -155,7 +169,9 @@ const ProfileScreen = () => {
                   keyboardType="phone-pad"
                 />
               ) : (
-                <Text style={styles.inputText}>{formData.noHp}</Text>
+                <View style={styles.inputTextContainer}>
+                  <Text style={styles.inputText}>{formData.noHp}</Text>
+                </View>
               )}
             </View>
             
@@ -165,13 +181,15 @@ const ProfileScreen = () => {
               <Text style={styles.inputLabel}>Alamat</Text>
               {isEditing ? (
                 <TextInput
-                  style={styles.input}
+                  style={[styles.input, { minHeight: 60, textAlignVertical: 'top' }]}
                   value={formData.alamat}
                   onChangeText={(text) => handleInputChange('alamat', text)}
                   multiline
                 />
               ) : (
-                <Text style={styles.inputText}>{formData.alamat}</Text>
+                <View style={styles.inputTextContainer}>
+                  <Text style={styles.inputText}>{formData.alamat}</Text>
+                </View>
               )}
             </View>
           </View>
@@ -191,7 +209,9 @@ const ProfileScreen = () => {
                   onChangeText={(text) => handleInputChange('platNomor', text)}
                 />
               ) : (
-                <Text style={styles.inputText}>{formData.platNomor}</Text>
+                <View style={styles.inputTextContainer}>
+                  <Text style={styles.inputText}>{formData.platNomor}</Text>
+                </View>
               )}
             </View>
             
@@ -206,7 +226,9 @@ const ProfileScreen = () => {
                   onChangeText={(text) => handleInputChange('jenisBecak', text)}
                 />
               ) : (
-                <Text style={styles.inputText}>{formData.jenisBecak}</Text>
+                <View style={styles.inputTextContainer}>
+                  <Text style={styles.inputText}>{formData.jenisBecak}</Text>
+                </View>
               )}
             </View>
             
@@ -222,7 +244,9 @@ const ProfileScreen = () => {
                   keyboardType="numeric"
                 />
               ) : (
-                <Text style={styles.inputText}>{formData.nik}</Text>
+                <View style={styles.inputTextContainer}>
+                  <Text style={styles.inputText}>{formData.nik}</Text>
+                </View>
               )}
             </View>
           </View>
@@ -239,26 +263,18 @@ const ProfileScreen = () => {
                 <Text style={styles.settingText}>Notifikasi</Text>
               </View>
               <Switch
-                trackColor={{ false: "#767577", true: "#B1944D" }}
+                trackColor={{ false: "#767577", true: "#0F3222" }}
                 thumbColor={isEnabled ? "#FFFFFF" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
                 onValueChange={toggleSwitch}
                 value={isEnabled}
               />
             </View>
             
             <View style={styles.divider} />
-            
-            <TouchableOpacity style={styles.settingItem}>
-              <View style={styles.settingInfo}>
-                <MaterialCommunityIcons name="theme-light-dark" size={24} color="#0F3222" />
-                <Text style={styles.settingText}>Tema Gelap</Text>
-              </View>
-              <Ionicons name="chevron-forward" size={20} color="#888888" />
-            </TouchableOpacity>
-            
             <View style={styles.divider} />
             
-            <TouchableOpacity style={styles.settingItem}>
+            <TouchableOpacity style={styles.settingItem} activeOpacity={0.8}>
               <View style={styles.settingInfo}>
                 <MaterialIcons name="language" size={24} color="#0F3222" />
                 <Text style={styles.settingText}>Bahasa</Text>
@@ -276,7 +292,7 @@ const ProfileScreen = () => {
           <Text style={styles.sectionTitle}>Bantuan & Dukungan</Text>
           
           <View style={styles.card}>
-            <TouchableOpacity style={styles.menuItem}>
+            <TouchableOpacity style={styles.menuItem} onPress={() => router.push('/halaman-utama/help-center/page')} activeOpacity={0.8}>
               <View style={styles.menuIcon}>
                 <MaterialIcons name="help-outline" size={24} color="#0F3222" />
               </View>
@@ -286,7 +302,7 @@ const ProfileScreen = () => {
             
             <View style={styles.divider} />
             
-            <TouchableOpacity style={styles.menuItem}>
+            <TouchableOpacity style={styles.menuItem} onPress={() => router.push('/halaman-awal/contact')} activeOpacity={0.8}>
               <View style={styles.menuIcon}>
                 <MaterialCommunityIcons name="email-outline" size={24} color="#0F3222" />
               </View>
@@ -296,7 +312,7 @@ const ProfileScreen = () => {
             
             <View style={styles.divider} />
             
-            <TouchableOpacity style={styles.menuItem}>
+            <TouchableOpacity style={styles.menuItem} onPress={() => router.push('/halaman-utama/privacy/page')} activeOpacity={0.8}>
               <View style={styles.menuIcon}>
                 <MaterialIcons name="privacy-tip" size={24} color="#0F3222" />
               </View>
@@ -306,7 +322,7 @@ const ProfileScreen = () => {
             
             <View style={styles.divider} />
             
-            <TouchableOpacity style={styles.menuItem}>
+            <TouchableOpacity style={styles.menuItem} onPress={() => router.push('/halaman-utama/ketentuan/page')} activeOpacity={0.8}>
               <View style={styles.menuIcon}>
                 <MaterialIcons name="description" size={24} color="#0F3222" />
               </View>
@@ -316,45 +332,26 @@ const ProfileScreen = () => {
           </View>
         </View>
 
-        {/* Action Buttons */}
-        <View style={styles.buttonContainer}>
-          {isEditing ? (
-            <>
-              <TouchableOpacity 
-                style={[styles.button, styles.saveButton]}
-                onPress={handleSave}
-              >
-                <Text style={styles.buttonText}>Simpan Perubahan</Text>
-              </TouchableOpacity>
-              <TouchableOpacity 
-                style={[styles.button, styles.cancelButton]}
-                onPress={() => setIsEditing(false)}
-              >
-                <Text style={[styles.buttonText, styles.cancelButtonText]}>Batal</Text>
-              </TouchableOpacity>
-            </>
-          ) : (
-            <TouchableOpacity 
-              style={[styles.button, styles.editButton]}
-              onPress={() => setIsEditing(true)}
-            >
-              <MaterialIcons name="edit" size={18} color="#FFFFFF" />
-              <Text style={styles.buttonText}>Edit Profil</Text>
-            </TouchableOpacity>
-          )}
-          
-          <TouchableOpacity 
-            style={[styles.button, styles.logoutButton]}
-            onPress={handleLogout}
-          >
-            <MaterialIcons name="logout" size={18} color="#F44336" />
-            <Text style={[styles.buttonText, styles.logoutButtonText]}>Keluar</Text>
-          </TouchableOpacity>
+        {/* Logout Button */}
+        <TouchableOpacity 
+          style={styles.logoutButton}
+          onPress={handleLogout}
+          activeOpacity={0.8}
+        >
+          <MaterialIcons name="logout" size={20} color="#F44336" />
+          <Text style={styles.logoutButtonText}>Keluar Akun</Text>
+        </TouchableOpacity>
+
+        <View style={styles.footerContainer}>
+          <Text style={styles.footerText}>
+            © 2025 Programer Cupu. All rights reserved.
+          </Text>
         </View>
+
       </ScrollView>
       
       {/* Footer */}
-      <Footer activeTab="profile" setActiveTab={(tab) => console.log(tab)} />
+      <Footer activeTab={activeTab} setActiveTab={setActiveTab} />
     </View>
   );
 };
@@ -365,31 +362,61 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
   },
   scrollContainer: {
-    paddingBottom: 30,
+    flex: 1,
+    marginBottom: 60,
   },
   header: {
+    backgroundColor: '#0F3222',
+    paddingTop: 50,
+    paddingBottom: 20,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 8,
+  },
+  headerContent: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#0F3222',
-    paddingVertical: 15,
     paddingHorizontal: 20,
-    paddingTop: 50,
   },
   headerTitle: {
     color: '#FFFFFF',
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: 22,
+    fontWeight: '800',
+    letterSpacing: 0.5,
+  },
+  editButton: {
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    padding: 8,
+    borderRadius: 20,
+  },
+  saveButton: {
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 15,
+    paddingVertical: 8,
+    borderRadius: 20,
+  },
+  saveButtonText: {
+    color: '#0F3222',
+    fontWeight: '600',
+    fontSize: 14,
   },
   profileSection: {
     alignItems: 'center',
-    paddingVertical: 25,
+    paddingTop: 30,
+    paddingBottom: 20,
     backgroundColor: '#FFFFFF',
-    marginBottom: 10,
+    marginHorizontal: 20,
+    marginTop: 20,
+    borderRadius: 15,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
-    shadowRadius: 4,
+    shadowRadius: 6,
     elevation: 3,
   },
   avatarContainer: {
@@ -397,33 +424,43 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   avatar: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    borderWidth: 2,
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    borderWidth: 3,
+    borderColor: '#B1944D',
+  },
+  avatarPlaceholder: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    backgroundColor: '#0F3222',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 3,
     borderColor: '#B1944D',
   },
   editPhotoIcon: {
     position: 'absolute',
-    bottom: 0,
-    right: 0,
+    bottom: 5,
+    right: 5,
     backgroundColor: '#B1944D',
-    width: 30,
-    height: 30,
-    borderRadius: 15,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 2,
     borderColor: '#FFFFFF',
   },
   profileName: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 22,
+    fontWeight: '700',
     color: '#0F3222',
     marginBottom: 5,
   },
   profileRole: {
-    fontSize: 14,
+    fontSize: 15,
     color: '#666666',
     marginBottom: 10,
   },
@@ -432,58 +469,67 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'rgba(177, 148, 77, 0.1)',
     paddingHorizontal: 15,
-    paddingVertical: 5,
-    borderRadius: 15,
+    paddingVertical: 8,
+    borderRadius: 20,
   },
   ratingText: {
-    fontSize: 14,
-    fontWeight: 'bold',
+    fontSize: 15,
+    fontWeight: '700',
     color: '#0F3222',
     marginLeft: 5,
     marginRight: 3,
   },
   ratingCount: {
-    fontSize: 12,
+    fontSize: 13,
     color: '#666666',
   },
   section: {
-    marginBottom: 15,
+    marginBottom: 20,
+    paddingHorizontal: 20,
   },
   sectionTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontSize: 17,
+    fontWeight: '700',
     color: '#0F3222',
-    marginLeft: 20,
-    marginBottom: 10,
+    marginBottom: 12,
+    marginLeft: 5,
   },
   card: {
     backgroundColor: '#FFFFFF',
-    borderRadius: 10,
-    paddingHorizontal: 15,
+    borderRadius: 15,
+    paddingHorizontal: 20,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowOpacity: 0.05,
+    shadowRadius: 6,
+    elevation: 2,
+    marginTop: 20,
   },
   inputGroup: {
-    paddingVertical: 15,
+    paddingVertical: 16,
   },
   inputLabel: {
-    fontSize: 12,
+    fontSize: 13,
     color: '#888888',
     marginBottom: 5,
+    fontWeight: '500',
+  },
+  inputTextContainer: {
+    paddingVertical: 5,
   },
   inputText: {
     fontSize: 16,
     color: '#333333',
+    fontWeight: '500',
+    lineHeight: 22,
   },
   input: {
     fontSize: 16,
     color: '#333333',
-    paddingVertical: 5,
+    paddingVertical: 8,
     borderBottomWidth: 1,
     borderBottomColor: '#EEEEEE',
+    fontWeight: '500',
   },
   divider: {
     height: 1,
@@ -493,7 +539,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 15,
+    paddingVertical: 16,
   },
   settingInfo: {
     flexDirection: 'row',
@@ -503,6 +549,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#333333',
     marginLeft: 15,
+    fontWeight: '500',
   },
   languageContainer: {
     flexDirection: 'row',
@@ -512,12 +559,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#888888',
     marginRight: 5,
+    fontWeight: '500',
   },
   menuItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 15,
+    paddingVertical: 16,
   },
   menuIcon: {
     width: 24,
@@ -528,47 +576,35 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#333333',
     marginLeft: 15,
+    fontWeight: '500',
   },
-  buttonContainer: {
-    paddingHorizontal: 20,
-    marginTop: 20,
-  },
-  button: {
+  logoutButton: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 15,
-    borderRadius: 10,
-    marginBottom: 15,
-  },
-  editButton: {
-    backgroundColor: '#B1944D',
-  },
-  saveButton: {
-    backgroundColor: '#0F3222',
-  },
-  cancelButton: {
-    backgroundColor: '#F5F5F5',
-    borderWidth: 1,
-    borderColor: '#DDDDDD',
-  },
-  logoutButton: {
     backgroundColor: 'rgba(244, 67, 54, 0.1)',
+    paddingVertical: 14,
+    borderRadius: 12,
+    marginHorizontal: 20,
+    marginTop: 10,
+    marginBottom: 30,
     borderWidth: 1,
     borderColor: 'rgba(244, 67, 54, 0.3)',
   },
-  buttonText: {
+  logoutButtonText: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
+    fontWeight: '600',
+    color: '#F44336',
     marginLeft: 10,
   },
-  cancelButtonText: {
-    color: '#666666',
-  },
-  logoutButtonText: {
-    color: '#F44336',
-  },
+  footerContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center', // Untuk membuat konten berada di tengah secara horizontal
+    paddingHorizontal: 30,
+    paddingBottom: 40,
+    width: '100%', // agar mengikuti lebar device
+  },  
 });
 
 export default ProfileScreen;

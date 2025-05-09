@@ -142,7 +142,6 @@ const DriverHomeScreen = () => {
       </TouchableOpacity>
     </View>
   );
-
   const renderVehicleInfo = () => (
     <View style={styles.vehicleCard}>
       <View style={styles.vehicleIconContainer}>
@@ -447,7 +446,7 @@ const styles = StyleSheet.create({
   vehicleCard: {
     backgroundColor: '#FFFFFF',
     marginHorizontal: 16,
-    marginTop: -20,
+    marginTop: 5,
     borderRadius: 12,
     padding: 16,
     flexDirection: 'row',

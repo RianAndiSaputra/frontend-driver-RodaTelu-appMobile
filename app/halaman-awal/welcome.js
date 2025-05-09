@@ -56,7 +56,7 @@ const WelcomeScreen = () => {
 
   return (
     <LinearGradient
-      colors={['#F5F9F7', '#E8F3EE', '#D5E8E0']}
+      colors={['#FFFFFF', '#FFFFFF', '#FFFFFF']}
       style={styles.container}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
